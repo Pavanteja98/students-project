@@ -135,7 +135,14 @@ export default function CustomizedTables() {
       is_employed : formData.isEmployed
     }
     setData([d, ...data ])
-    console.log(data)
+    setFormData({
+      userName: '',
+      fullname: '',
+      userAge: '',
+      isMarried: false,
+      employed: false,
+      founderStatus: false,
+    })
     setaddModal(false)
   };
 
@@ -152,8 +159,11 @@ export default function CustomizedTables() {
     const { name, value, type, checked } = event.target;
     setUpdateData({
       ...updateData,
+      last_name : '',
       [name]: type === 'checkbox' ? checked : value,
     });
+
+    console.log(updateData)
   };
 
   const handleUpdateSubmit = (event) => {
@@ -161,10 +171,18 @@ export default function CustomizedTables() {
       setData((prevUserList) =>
         prevUserList.map((user) =>
           user.username === updateData.userName
-            ? { ...user, first_name: updateData.fullname, age: updateData.age, isEmployed: updateData.isEmployed, marital_status : (updateData.maritalStatus? "married" : "unmarried"), is_founder : updateData.isFounder }
+            ? { ...user, first_name: updateData.fullname, age: updateData.userAge, isEmployed: updateData.isEmployed, marital_status : (updateData.maritalStatus? "married" : "unmarried"), is_founder : updateData.isFounder }
             : user
         )
       );
+      setUpdateData({
+        userName: '',
+        fullname: '',
+        userAge: '',
+        isMarried: false,
+        employed: false,
+        founderStatus: false,
+      })
     setUopen(false)
     };
 
@@ -206,7 +224,7 @@ export default function CustomizedTables() {
               <StyledTableCell >{row.is_founder ? "Yes" : "No"}</StyledTableCell>
               <StyledTableCell >
                 <RemoveRedEyeOutlinedIcon style={{ cursor: "pointer" }} onClick={(e) => { e.preventDefault(); handleOpen(`${row.first_name} ${row.last_name}`,row.age,row.marital_status,row.is_employed) }}/>&nbsp;&nbsp;
-                <ModeEditOutlineRoundedIcon style={{ cursor: "pointer" }} onClick={(e) => { e.preventDefault(); handleUopne();setUpdateData({ ...updateData, userName: e.target.value, }); }}/>&nbsp;&nbsp;
+                <ModeEditOutlineRoundedIcon style={{ cursor: "pointer" }} onClick={(e) => { e.preventDefault(); handleUopne();setUpdateData({ ...updateData, userName: row.username }); }}/>&nbsp;&nbsp;
                 <DeleteRoundedIcon onClick={(e) => { e.preventDefault(); removeItem(row.username) }} style={{ cursor: "pointer" }} />
               </StyledTableCell>
             </StyledTableRow>
