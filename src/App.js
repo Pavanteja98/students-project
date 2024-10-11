@@ -131,10 +131,12 @@ export default function CustomizedTables() {
       last_name : formData.fullName.split(" ").pop(),
       age: formData.age,
       marital_status : (formData.maritalStatus? "married" : "unmarried"), 
-      is_founder : formData.isFounder
+      is_founder : formData.isFounder,
+      is_employed : formData.isEmployed
     }
     setData([d, ...data ])
     console.log(data)
+    setaddModal(false)
   };
 
   const [updateData, setUpdateData] = useState({
@@ -163,6 +165,7 @@ export default function CustomizedTables() {
             : user
         )
       );
+    setUopen(false)
     };
 
 
